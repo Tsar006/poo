@@ -1,0 +1,4 @@
+o ultimo jogador a jogar e cumprir os requisitos para ganhar o jogo é o jogador que ganhou, então é so guardar o ultimo movimento para mostrar e saber quem ganhou
+
+posso so comparar se todas as casas da linha, coluna ou diagonal são iguais e ver qual a ultima jogada pra saber quem ganhou, isso limpa o codigo
+
