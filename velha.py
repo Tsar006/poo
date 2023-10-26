@@ -1,4 +1,4 @@
-tabuleiro = [ '', '', '',
+tabuleiro = [ '', '', '', 
               '', '', '',
               '', '', '']
 
@@ -27,13 +27,15 @@ def verifica_local_jogado(num_casa):
         return 1
 
 
-def checar_colunas():
-    if (tabuleiro[0] == 'x' and tabuleiro[3] == 'x' and tabuleiro[6] == 'x') or (tabuleiro[1] == 'x' and tabuleiro[4] == 'x' and tabuleiro[7] == 'x') or (tabuleiro[2] == 'x' and tabuleiro[5] == 'x' and tabuleiro[8] == 'x'):
-        print("jogador 1 ganhou!")
+def checar_ganho():
+    if (tabuleiro[0] ==  tabuleiro[3] ==  tabuleiro[6]) or (tabuleiro[1] == tabuleiro[4] == tabuleiro[7]) or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8] == 'x'):
         return 1 
-    elif (tabuleiro[0] == tabuleiro[3] == tabuleiro[6]) or (tabuleiro[1] == tabuleiro[4] == tabuleiro[7]) or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8]):
-        print("jogador 1 ganhou!")
-        return 1 
+    elif (tabuleiro[0] ==  tabuleiro[1] == tabuleiro[2]) or (tabuleiro[1] and tabuleiro[4] == tabuleiro[7] ) or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8]):
+        return 1
+    elif (tabuleiro[0] ==  tabuleiro[4] == tabuleiro[8]) or (tabuleiro[2] and tabuleiro[4] == tabuleiro[6]):
+        return 1
+    else: 
+        return 0
     
 def iniciar_jogo():
     contador_vez = 0
@@ -43,10 +45,13 @@ def iniciar_jogo():
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
                 jogador_joga(1,lugar_jogar)
-                teste = checar_colunas()
+                teste = checar_ganho()
                 if teste == 1:
+                    print("jogador 1 venceu! \n fim de jogo")
                     break
-            else:
+                else:
+                    
+                else:
                 contador_vez -= 1
             contador_vez += 1
 
@@ -55,6 +60,12 @@ def iniciar_jogo():
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
                 jogador_joga(2,lugar_jogar)
+                teste = checar_ganho()
+                if teste == 1:
+                    print("jogador 2 venceu! \n fim de jogo")
+                    break
+                else: 
+                    pass
             else:
                 contador_vez -= 1
             contador_vez += 1
