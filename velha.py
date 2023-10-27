@@ -1,7 +1,9 @@
 tabuleiro = [ '', '', '', 
               '', '', '',
               '', '', '']
-
+placar = {}
+pontos_um = 0
+pontos_dois = 0
 def mostrar_tabuleiro():
     tabuleiro_montado = []
     linha_montado = []
@@ -24,8 +26,6 @@ def mostrar_tabuleiro():
 def limpa_tabuleiro():
     for item in range(len(tabuleiro)):
         tabuleiro[item] = ''
-
-
 
 def jogador_joga(num_jogador,jogada):
     jogada = int(jogada)
@@ -56,6 +56,43 @@ def testa_erro(nome):
         return 1
     
 #boa sorte mozinho<3
+
+##############json
+import json
+
+def adicionar_jogador(nome, pontos):
+    # Se o nome já existe no placar, atualizar sua pontuação
+    if nome in placar:
+        placar[nome] += pontos
+    else:
+        placar[nome] = pontos
+
+# Função para salvar o placar em um arquivo json
+def salvar_placar():
+    with open("placar.json", "w") as arquivo:
+        string_json = json.dumps(placar)
+        arquivo.write(string_json)
+
+def carregar_placar():
+    with open("placar.json", "r") as arquivo:
+        placar = json.load(arquivo)
+    return placar
+
+adicionar_jogador("Antonia", 10) 
+adicionar_jogador("Thiago", 5)
+adicionar_jogador("Antonia", 5)
+salvar_placar() 
+
+def salvar_carregar(opcao):
+    if opcao == "salvar":
+        jogador_um_nome = input("digite o nome do jogador um: ")
+        jogador_dois_nome = input("digite o nome do jogador dois: ")
+        adicionar_jogador(jogador_um_nome, pontos_um)
+        adicionar_jogador(jogador_dois_nome,pontos_dois)
+        salvar_placar()
+    elif opcao == "carregar":
+        carregar_placar()
+
 
 def checar_ganho():
     if (tabuleiro[0] ==  tabuleiro[3] ==  tabuleiro[6] != '') or (tabuleiro[1] == tabuleiro[4] == tabuleiro[7] != '') or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8] != ''):
@@ -91,6 +128,7 @@ def iniciar_jogo():
                 teste = checar_ganho()
                 if teste == 1:
                     print("jogador 1 venceu! \n fim de jogo")
+                    pontos_um += 1
                     limpa_tabuleiro()
                     break
                 else:
@@ -117,6 +155,7 @@ def iniciar_jogo():
                 teste = checar_ganho()
                 if teste == 1:
                     print("jogador 2 venceu! \n fim de jogo")
+                    pontos_dois += 1
                     limpa_tabuleiro()
                     break
                 else:
@@ -148,6 +187,7 @@ def menu():
     print("---MENU PRINCIPAL----------")
     print("|1 - jogar                 |")
     print("|2 - creditos              |")
+    print("|3 - salvar/carregar       |")
     print("|0 - Sair                  |")
     print('')
     escolha = input("escolha uma das opçoes acima: ")
@@ -161,7 +201,11 @@ while True:
         iniciar_jogo()
     elif escolha_opção == '2': 
         equipe()
+    elif escolha_opção == '3':
+        escolha = input("digite 'salvar' para salvar e 'carregar' para carregar: ")
+        salvar_carregar(escolha)
     elif escolha_opção == '0':
-        pass
+        print("encerrando")
+        break
     else:
-        print('Esta opção não exite!')
+        print('Esta opção não existe!')
