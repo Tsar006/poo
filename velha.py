@@ -1,6 +1,7 @@
 tabuleiro = [ '', '', '', 
               '', '', '',
               '', '', '']
+
 def mostrar_tabuleiro():
     tabuleiro_montado = []
     linha_montado = []
@@ -25,14 +26,6 @@ def limpa_tabuleiro():
         tabuleiro[item] = ''
 
 
-def menu():
-    print("---MENU PRINCIPAL----------")
-    print("|1 - jogar                 |")
-    print("|2 - creditos              |")
-    print("|0 - Sair                  |")
-    print('')
-    escolha = input("escolha uma das opçoes acima: ")
-    return escolha
 
 def jogador_joga(num_jogador,jogada):
     jogada = int(jogada)
@@ -48,22 +41,49 @@ def verifica_local_jogado(num_casa):
     else:
         return 1
 
+############ tratamento de erros
+def testa_erro(nome):
+    #não numero
+    try:
+        nome = int(nome)
+        if nome > 9 and nome < 1:
+         print("tente novamente e digite um numero entre 1 e 9")
+    
+        else:
+            return 0
+    except:
+        print('Caractere não aceito! tente novamente. ')
+        return 1
+    
+#boa sorte mozinho<3
 
 def checar_ganho():
     if (tabuleiro[0] ==  tabuleiro[3] ==  tabuleiro[6] != '') or (tabuleiro[1] == tabuleiro[4] == tabuleiro[7] != '') or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8] != ''):
         return 1
-    elif (tabuleiro[0] ==  tabuleiro[1] == tabuleiro[2] != '') or (tabuleiro[3] and tabuleiro[4] == tabuleiro[5] != '' ) or (tabuleiro[6] == tabuleiro[7] == tabuleiro[8] != ''):
+    elif (tabuleiro[0] ==  tabuleiro[1] == tabuleiro[2] != '') or (tabuleiro[3] == tabuleiro[4] == tabuleiro[5] != '' ) or (tabuleiro[6] == tabuleiro[7] == tabuleiro[8] != ''):
         return 1
-    elif (tabuleiro[0] ==  tabuleiro[4] == tabuleiro[8] != '') or (tabuleiro[2] and tabuleiro[4] == tabuleiro[6] != ''):
+    elif (tabuleiro[0] ==  tabuleiro[4] == tabuleiro[8] != '') or (tabuleiro[2] == tabuleiro[4] == tabuleiro[6] != ''):
         return 1
     else: 
         return 0
-    
+
+def empate():
+    if all(casa != '' for casa in tabuleiro):
+        print("empate")
+        return 1
+
+
 def iniciar_jogo():
     contador_vez = 0
     while True:
         if contador_vez % 2 == 0:
-            lugar_jogar = int(input("vez do jogador 1, digite o numero da casa onde irá inserir o X: "))
+            lugar_jogar = input("vez do jogador 1, digite o numero da casa onde irá inserir o X: ")
+            erro = testa_erro(lugar_jogar)
+            if erro == 1:
+                continue
+            elif erro != 1:
+                lugar_jogar = int(lugar_jogar)
+                pass
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
                 jogador_joga(1,lugar_jogar)
@@ -74,13 +94,22 @@ def iniciar_jogo():
                     limpa_tabuleiro()
                     break
                 else:
-                    pass
+                    empate_teste = empate()
+                    if empate_teste == 1:
+                        break
+
             else:
                 contador_vez -= 1
             contador_vez += 1
 
         elif contador_vez % 2 != 0: 
-            lugar_jogar = int(input("vez do jogador 2, digite o numero da casa onde irá inserir a O: "))
+            lugar_jogar = input("vez do jogador 2, digite o numero da casa onde irá inserir a O: ")
+            erro = testa_erro(lugar_jogar)
+            if erro == 1:
+                continue
+            elif erro != 1:
+                lugar_jogar = int(lugar_jogar)
+                pass
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
                 jogador_joga(2,lugar_jogar)
@@ -90,8 +119,10 @@ def iniciar_jogo():
                     print("jogador 2 venceu! \n fim de jogo")
                     limpa_tabuleiro()
                     break
-                else: 
-                    pass
+                else:
+                    empate_teste = empate()
+                    if empate_teste == 1:
+                        break
             else:
                 contador_vez -= 1
             contador_vez += 1
@@ -109,11 +140,28 @@ def iniciar_jogo():
 
 
 
+def equipe():
+    print('Equipe de desenvolvimento: \n - Antonia Vitória - \n - Thiago Andrade -')
+
+
+def menu():
+    print("---MENU PRINCIPAL----------")
+    print("|1 - jogar                 |")
+    print("|2 - creditos              |")
+    print("|0 - Sair                  |")
+    print('')
+    escolha = input("escolha uma das opçoes acima: ")
+    return escolha
+
+
+
 while True:
     escolha_opção = menu()
     if escolha_opção == '1':
         iniciar_jogo()
-
     elif escolha_opção == '2': 
+        equipe()
+    elif escolha_opção == '0':
         pass
-
+    else:
+        print('Esta opção não exite!')
