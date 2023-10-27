@@ -28,11 +28,11 @@ def verifica_local_jogado(num_casa):
 
 
 def checar_ganho():
-    if (tabuleiro[0] ==  tabuleiro[3] ==  tabuleiro[6]) or (tabuleiro[1] == tabuleiro[4] == tabuleiro[7]) or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8] == 'x'):
-        return 1 
-    elif (tabuleiro[0] ==  tabuleiro[1] == tabuleiro[2]) or (tabuleiro[1] and tabuleiro[4] == tabuleiro[7] ) or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8]):
+    if (tabuleiro[0] ==  tabuleiro[3] ==  tabuleiro[6] != '') or (tabuleiro[1] == tabuleiro[4] == tabuleiro[7] != '') or (tabuleiro[2] == tabuleiro[5] == tabuleiro[8] != ''):
         return 1
-    elif (tabuleiro[0] ==  tabuleiro[4] == tabuleiro[8]) or (tabuleiro[2] and tabuleiro[4] == tabuleiro[6]):
+    elif (tabuleiro[0] ==  tabuleiro[1] == tabuleiro[2] != '') or (tabuleiro[3] and tabuleiro[4] == tabuleiro[5] != '' ) or (tabuleiro[6] == tabuleiro[7] == tabuleiro[8] != ''):
+        return 1
+    elif (tabuleiro[0] ==  tabuleiro[4] == tabuleiro[8] != '') or (tabuleiro[2] and tabuleiro[4] == tabuleiro[6] != ''):
         return 1
     else: 
         return 0
@@ -50,8 +50,8 @@ def iniciar_jogo():
                     print("jogador 1 venceu! \n fim de jogo")
                     break
                 else:
-                    
-                else:
+                    pass
+            else:
                 contador_vez -= 1
             contador_vez += 1
 
