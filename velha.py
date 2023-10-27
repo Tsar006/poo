@@ -1,6 +1,29 @@
 tabuleiro = [ '', '', '', 
               '', '', '',
               '', '', '']
+def mostrar_tabuleiro():
+    tabuleiro_montado = []
+    linha_montado = []
+    contador = 1
+    for casa in tabuleiro:
+        
+        if contador % 3 == 0: 
+            linha_montado.append(casa)
+            tabuleiro_montado.append(linha_montado)
+            linha_montado = []
+        else: 
+            linha_montado.append(casa)
+        contador += 1
+
+    for linha in tabuleiro_montado:
+        for item in linha:
+            print(f"| {item} |", end='' )
+        print('')
+
+def limpa_tabuleiro():
+    for item in range(len(tabuleiro)):
+        tabuleiro[item] = ''
+
 
 def menu():
     print("---MENU PRINCIPAL----------")
@@ -17,7 +40,6 @@ def jogador_joga(num_jogador,jogada):
         tabuleiro[jogada] = 'x'
     else:
         tabuleiro[jogada] = 'O'
-    print(tabuleiro)
 
 def verifica_local_jogado(num_casa):
     if tabuleiro[num_casa] != '':
@@ -45,9 +67,11 @@ def iniciar_jogo():
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
                 jogador_joga(1,lugar_jogar)
+                mostrar_tabuleiro()
                 teste = checar_ganho()
                 if teste == 1:
                     print("jogador 1 venceu! \n fim de jogo")
+                    limpa_tabuleiro()
                     break
                 else:
                     pass
@@ -60,9 +84,11 @@ def iniciar_jogo():
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
                 jogador_joga(2,lugar_jogar)
+                mostrar_tabuleiro()
                 teste = checar_ganho()
                 if teste == 1:
                     print("jogador 2 venceu! \n fim de jogo")
+                    limpa_tabuleiro()
                     break
                 else: 
                     pass
