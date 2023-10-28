@@ -46,17 +46,22 @@ def testa_erro(nome):
     #não numero
     try:
         nome = int(nome)
-        if nome > 9 and nome < 1:
-         print("tente novamente e digite um numero entre 1 e 9")
-    
+        if nome > 9 or nome < 1:
+            print("tente novamente e digite um numero entre 1 e 9")
+            return 1
         else:
             return 0
     except:
         print('Caractere não aceito! tente novamente. ')
         return 1
-    
+
 #boa sorte mozinho<3
 
+def mostrar_placar():
+    for nome, pontos in placar.items():
+        print("_______________")
+        print(f"{nome}| {pontos}", end = '|')
+        print("")
 ##############json
 import json
 
@@ -114,12 +119,12 @@ def iniciar_jogo():
     contador_vez = 0
     while True:
         if contador_vez % 2 == 0:
-            lugar_jogar = input("vez do jogador 1, digite o numero da casa onde irá inserir o X: ")
+            lugar_jogar = input("vez do jogador 1, digite o numero da casa, entre 1 e 9 onde irá inserir o X: ")
             erro = testa_erro(lugar_jogar)
             if erro == 1:
                 continue
             elif erro != 1:
-                lugar_jogar = int(lugar_jogar)
+                lugar_jogar = int(lugar_jogar) - 1
                 pass
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
@@ -128,7 +133,9 @@ def iniciar_jogo():
                 teste = checar_ganho()
                 if teste == 1:
                     print("jogador 1 venceu! \n fim de jogo")
+                    global pontos_um
                     pontos_um += 1
+                    mostrar_placar()
                     limpa_tabuleiro()
                     break
                 else:
@@ -141,12 +148,12 @@ def iniciar_jogo():
             contador_vez += 1
 
         elif contador_vez % 2 != 0: 
-            lugar_jogar = input("vez do jogador 2, digite o numero da casa onde irá inserir a O: ")
+            lugar_jogar = input("vez do jogador 2, digite o numero da casa, entre 1 e 9, onde irá inserir a O: ")
             erro = testa_erro(lugar_jogar)
             if erro == 1:
                 continue
             elif erro != 1:
-                lugar_jogar = int(lugar_jogar)
+                lugar_jogar = int(lugar_jogar) - 1
                 pass
             validade = verifica_local_jogado(lugar_jogar)
             if validade == 1:
@@ -155,6 +162,7 @@ def iniciar_jogo():
                 teste = checar_ganho()
                 if teste == 1:
                     print("jogador 2 venceu! \n fim de jogo")
+                    global pontos_dois
                     pontos_dois += 1
                     limpa_tabuleiro()
                     break
@@ -188,6 +196,7 @@ def menu():
     print("|1 - jogar                 |")
     print("|2 - creditos              |")
     print("|3 - salvar/carregar       |")
+    print("|4 - mostrar placar        |")
     print("|0 - Sair                  |")
     print('')
     escolha = input("escolha uma das opçoes acima: ")
@@ -204,6 +213,8 @@ while True:
     elif escolha_opção == '3':
         escolha = input("digite 'salvar' para salvar e 'carregar' para carregar: ")
         salvar_carregar(escolha)
+    elif escolha_opção == '4':
+        mostrar_placar()
     elif escolha_opção == '0':
         print("encerrando")
         break
